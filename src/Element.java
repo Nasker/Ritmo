@@ -45,7 +45,7 @@ public class Element {
                 y1,
                 this.x,
                 this.y,
-                this.r/10
+                this.r
         );
 
         if (lineCollisioned && !this.collisionDetected) {

@@ -1,6 +1,7 @@
 import processing.core.PApplet;
 import themidibus.*;
 
+import javax.sound.midi.MidiMessage;
 import java.util.ArrayList;
 
 public class Main extends PApplet {
@@ -40,7 +41,7 @@ public class Main extends PApplet {
 
     public void draw() {
         background(100);
-        calculateAngle();
+        //calculateAngle();
         roulette.draw(ang);
         for (Element e : elements) {
             e.draw();
@@ -54,10 +55,9 @@ public class Main extends PApplet {
         drawElements();
     }
 
-    public void calculateAngle() {
-        if (timeInterval.checkInterval()) {
-            //Time interval 10ms
-            ang += (float) bpm;
+    public void midiMessage(MidiMessage message) {
+        if(message.getStatus() == 0xF8) {
+            ang += (float) 3;
             if (ang > 360) ang = 0;
         }
     }
