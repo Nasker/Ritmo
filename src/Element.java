@@ -18,7 +18,10 @@ public class Element {
     }
 
     void draw() {
+        this.applet.noStroke();
         this.applet.fill(ccolor[0], ccolor[1], ccolor[2]);
+        this.applet.circle(this.x, this.y, this.r/10);
+        this.applet.fill(ccolor[0], ccolor[1], ccolor[2],100);
         this.applet.circle(this.x, this.y, this.r);
     }
 

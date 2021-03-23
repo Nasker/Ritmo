@@ -11,7 +11,7 @@ public class Main extends PApplet {
     float ang = 0;
     int bpm = 10;
     int offsetBottom = 10;
-    int offsetSide = 100;
+    int offsetSide = 60;
 
     //Circles
     ArrayList<Circle> barCircles = new ArrayList<>();
@@ -34,6 +34,7 @@ public class Main extends PApplet {
         ruleta = new Ruleta(this);
         timeInterval = new Timer(this,10); //10ms
         timeInterval.setup();
+        smooth();
     }
 
     public void draw() {
@@ -43,7 +44,7 @@ public class Main extends PApplet {
         ruleta.draw(ang);
         for (Element e : elements) {
             e.draw();
-            if (e.lineCollision(ruleta.x0, ruleta.y0, ruleta.x1, ruleta.y1)) {
+            if (e.lineCollision(ruleta.center.x, ruleta.center.y, ruleta.radius.x, ruleta.radius.y)) {
                 //COLLISION!!!!
                 myBus.sendNoteOn(0, e.noteNumber, 100); // Send a Midi noteOn
                 myBus.sendNoteOff(0, e.noteNumber, 0); // Send a Midi noteOn
@@ -123,7 +124,7 @@ public class Main extends PApplet {
     public void drawBar() {
         fill(150);
         stroke(0);
-        rect(100, height - (70 + offsetBottom), width - (offsetSide * 2), 70);
+        rect((float) (offsetSide/2.0), height - (70 + offsetBottom), width-offsetSide, 70);
     }
 
 

@@ -23,7 +23,9 @@ public class Circle {
     void display() {
         this.applet.fill(ccolor[0], ccolor[1], ccolor[2]);
         this.applet.stroke(0);
-        this.applet.ellipse(posX, posY, 50, 50);
+        this.applet.circle(posX, posY,5);
+        this.applet.fill(ccolor[0], ccolor[1], ccolor[2],100);
+        this.applet.circle(posX, posY, 50);
     }
 
     void move(float x, float y) {
