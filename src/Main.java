@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Main extends PApplet {
     MidiBus myBus;
-    Ruleta ruleta;
+    Roulette roulette;
     ArrayList<Element> elements;
     Timer timeInterval;
     float ang = 0;
@@ -26,25 +26,25 @@ public class Main extends PApplet {
     float giro = 0;
 
     public void settings(){
-        size(800, 800);
+        size(800, 1000);
+        smooth(10);
     }
     public void setup(){
         myBus = new MidiBus(this, "loopMIDI Port", "loopMIDI Port");
         elements = new ArrayList<>();
-        ruleta = new Ruleta(this);
+        roulette = new Roulette(this);
         timeInterval = new Timer(this,10); //10ms
         timeInterval.setup();
-        smooth();
+
     }
 
     public void draw() {
-        background(0);
-        background(0);
+        background(100);
         calculateAngle();
-        ruleta.draw(ang);
+        roulette.draw(ang);
         for (Element e : elements) {
             e.draw();
-            if (e.lineCollision(ruleta.center.x, ruleta.center.y, ruleta.radius.x, ruleta.radius.y)) {
+            if (e.lineCollision(roulette.center.x, roulette.center.y, roulette.radius.x, roulette.radius.y)) {
                 //COLLISION!!!!
                 myBus.sendNoteOn(0, e.noteNumber, 100); // Send a Midi noteOn
                 myBus.sendNoteOff(0, e.noteNumber, 0); // Send a Midi noteOn
@@ -82,6 +82,8 @@ public class Main extends PApplet {
     public void mousePressed() {
         mouseAction();
     }
+
+    public void mouseClicked() { moveElement(); }
 
     public void addNewElement(float posX, float posY, int[] ccolor, int type) {
         Element newElement = new Element(this, posX, posY, 50, ccolor, getNoteByType(type));
@@ -205,5 +207,7 @@ public class Main extends PApplet {
         }
     }
 
-
+    public void moveElement() {
+        elements.removeIf(element -> element.isOver(mouseX, mouseY) && mouseButton == RIGHT);
+    }
 }

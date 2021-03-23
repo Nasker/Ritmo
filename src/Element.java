@@ -21,8 +21,19 @@ public class Element {
         this.applet.noStroke();
         this.applet.fill(ccolor[0], ccolor[1], ccolor[2]);
         this.applet.circle(this.x, this.y, this.r/10);
-        this.applet.fill(ccolor[0], ccolor[1], ccolor[2],100);
+        int alpha;
+        if (this.collisionDetected){
+            alpha = 255;
+        }
+        else{
+            alpha = 100;
+        }
+        this.applet.fill(ccolor[0], ccolor[1], ccolor[2],alpha);
         this.applet.circle(this.x, this.y, this.r);
+    }
+
+    boolean isOver(float x, float y){
+        return pointCircle(this.x, this.y, x, y, this.r);
     }
 
     boolean lineCollision(float x0, float y0, float x1, float y1) {
@@ -34,7 +45,7 @@ public class Element {
                 y1,
                 this.x,
                 this.y,
-                this.r
+                this.r/10
         );
 
         if (lineCollisioned && !this.collisionDetected) {
